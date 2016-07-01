@@ -12,6 +12,7 @@ module CarrierWave
 
       def store!(*args)
         primary_storage.store!(*args)
+        secondary_storage.store!(*args)
       end
 
       def retrieve!(*args)
