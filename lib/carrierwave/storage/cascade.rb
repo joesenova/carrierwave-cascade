@@ -40,6 +40,10 @@ module CarrierWave
           @uploader = uploader
           @real_file = real_file
         end
+        
+        def url
+          real_file.url
+        end
 
         def delete
           if true === @uploader.allow_secondary_file_deletion
