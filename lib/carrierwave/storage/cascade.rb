@@ -19,6 +19,7 @@ module CarrierWave
         primary_file = primary_storage.retrieve!(*args)
 
         if !primary_file.exists?
+          secondary_file = secondary_storage.retrieve!(*args)
           if secondary_file.exists?
             return SecondaryFileProxy.new(uploader, secondary_file)
           else
