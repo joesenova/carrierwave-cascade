@@ -21,7 +21,10 @@ module CarrierWave
         if !primary_file.exists?
           secondary_file = secondary_storage.retrieve!(*args)
           if secondary_file.exists?
-            return SecondaryFileProxy.new(uploader, secondary_file)
+            uploader.cache! secondary_file
+            file = CarrierWave::SanitizedFile.new(::File.expand_path(uploader.send(:cache_path), uploader.root))
+            primary_storage.store!(file)
+            # return SecondaryFileProxy.new(uploader, secondary_file)
           else
             nil
           end
