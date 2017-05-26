@@ -17,17 +17,19 @@ module CarrierWave
 
       def retrieve!(*args)
         primary_file = primary_storage.retrieve!(*args)
-
+        
+        # Remove secondary storage, and just return nil if file not exist
         if !primary_file.exists?
-          secondary_file = secondary_storage.retrieve!(*args)
-          if secondary_file.exists?
-            uploader.cache! secondary_file
-            file = CarrierWave::SanitizedFile.new(::File.expand_path(uploader.send(:cache_path), uploader.root))
-            primary_storage.store!(file)
+          #secondary_file = secondary_storage.retrieve!(*args)
+          #if secondary_file.exists?
+          #  uploader.cache! secondary_file
+          #  file = CarrierWave::SanitizedFile.new(::File.expand_path(uploader.send(:cache_path), uploader.root))
+          #  primary_storage.store!(file)
             # return SecondaryFileProxy.new(uploader, secondary_file)
-          else
-            nil
-          end
+          #else
+          #  nil
+          #end
+          nil
         else
           return primary_file
         end
